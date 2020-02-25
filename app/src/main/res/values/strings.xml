@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">Ainabkoi Dairy</string>
+
+    <string name="notification">notification</string>
+    <string name="home">home</string>
+    <string name="manage_farmer">manage farmer</string>
+    <string name="manage_staff">manage staff</string>
+    <string name="more">more</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="farmer_fragment">farmer fragment</string>
+    <string name="home_fragment">home fragment</string>
+    <string name="staff_notification_framen">staff notification framen</string>
+    <string name="farmer_data">farmer data</string>
+    <string name="payments">payments</string>
+    <string name="visualize_data">Visualize data</string>
+    <string name="search_name_id">Enter name or id of the farmer</string>
+    <string name="view">View</string>
+    <string name="id_number">ID number</string>
+    <string name="view_staff">View staff</string>
+    <string name="new_staff">New staff</string>
+    <string name="edit_staff">Edit staff</string>
+    <string name="staff_per_department">Staff Per department</string>
+    <string name="view_farmer">View farmer</string>
+    <string name="add_new_farmer">Add new farmer</string>
+    <string name="view_farmers_per_location">View farmers per location</string>
+    <string name="edit_farmer">Edit farmer</string>
+    <string name="add_staff">Add staff</string>
+    <string name="id_no">ID No</string>
+    <string name="pay_farmer">Pay farmer</string>
+    <string name="payment_history">Payment history</string>
+    <string name="select_section">Select section</string>
+    <string name="select_role">Select role</string>
+    <string name="farmer_name">Farmer name</string>
+    <string name="add_location">Add location</string>
+    <string name="view_locations"><u>View locations</u></string>
+    <string name="locations">locations</string>
+    <string name="add_farmer"><u>Add farmer</u></string>
+    <string name="add_location_farmer"><u>Add location</u></string>
+    <string name="payment_history_link"><u>Payment history</u></string>
+
+    <string-array name="duration">
+        <item>1 month</item>
+        <item>3 month</item>
+        <item>6 month</item>
+        <item>1 year</item>
+    </string-array>
+
+    <string-array name="Sections">
+        <item>Sales</item>
+        <item>Processing </item>
+        <item>Receiving </item>
+        <item>Security </item>
+    </string-array>
+
+    <string-array name="Roles">
+        <item>Manager</item>
+        <item>Assistant manager</item>
+        <item>Casual</item>
+        <item>IT associate</item>
+    </string-array>
+
+    <string-array name="filter_farmer">
+        <item> select sort</item>
+        <item>Name</item>
+        <item>IDNO</item>
+        <item>location</item>
+    </string-array>
+
+    <string-array name="limits">
+        <item>50</item>
+        <item>100</item>
+        <item>150</item>
+        <item>All</item>
+
+    </string-array>
+
+    <string-array name="filter_pay_farmer_margin">
+        <item>Monthly</item>
+        <item>Weekly</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>current month</item>
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+
+    </string-array>
+
+</resources>

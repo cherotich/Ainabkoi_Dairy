@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1001260478103",
+    "firebase_url": "https://cloneainabkoi.firebaseio.com",
+    "project_id": "cloneainabkoi",
+    "storage_bucket": "cloneainabkoi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001260478103:android:96bb7d44d75577a37983d2",
+        "android_client_info": {
+          "package_name": "com.example.ainabkoidairy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001260478103-a19tppjhdsffsgo5k2v2qvcpae2jhkpd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ainabkoidairy",
+            "certificate_hash": "73efada831eb22d339617a093d397aed6a1b3dc2"
+          }
+        },
+        {
+          "client_id": "1001260478103-ffejco8kse0ol2r0rc9f4mq2pbl27kcs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVDkIt0I7CjPfDVZLJ9Cm4Ql6kMxCKpAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001260478103-ffejco8kse0ol2r0rc9f4mq2pbl27kcs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

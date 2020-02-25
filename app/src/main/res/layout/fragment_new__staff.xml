@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".New_Staff">
+
+    <EditText
+        android:id="@+id/new_staff_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_marginTop="50dp"
+        android:hint="Staff name"
+       />
+
+    <EditText
+        android:id="@+id/new_staff_IDNO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+      android:layout_below="@+id/new_staff_name"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="@string/id_no"
+        android:inputType="textPersonName"
+         />
+
+    <EditText
+        android:id="@+id/new_staff_phoneno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/new_staff_IDNO"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="phone number"
+        android:inputType="phone"
+        />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@+id/new_staff_phoneno"
+    android:text="@string/select_section"
+    android:layout_marginTop="30dp"/>
+    <Spinner
+        android:id="@+id/new_staff_Section_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/new_staff_phoneno"
+        android:layout_marginTop="30dp"
+     />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/new_staff_Section_spinner"
+        android:text="@string/select_role"
+        android:layout_marginTop="30dp"/>
+
+    <Spinner
+        android:id="@+id/new_staff_role_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/new_staff_Section_spinner"
+        android:layout_marginTop="30dp"
+        />
+
+    <Button
+        android:id="@+id/new_staff_submit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/new_staff_role_spinner"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+
+        android:text="Submit" />
+
+</RelativeLayout>
