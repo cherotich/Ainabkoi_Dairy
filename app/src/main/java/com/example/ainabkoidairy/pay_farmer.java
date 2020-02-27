@@ -322,7 +322,7 @@ int total=0;
 if ((cYear) .equals(m.getYear())&&cmonth.equalsIgnoreCase(m.getMonthstring()))
 {
 
-     payabled = total*35;
+//     payabled = total*35;
 
     //total=Integer.parseInt(m.getAmount());
     milksupplied.setText(String.valueOf(total));
@@ -367,8 +367,43 @@ else
                         if (dataSnapshot.exists())
                         {
 
-                           String totalpaid= dataSnapshot.getValue().toString();
+                            final String totalpaid = dataSnapshot.getValue().toString();
                             Amountpaid.setText(totalpaid);
+
+
+                            idnolistrefermilk.child(selectedid).child("timestamp").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                    Iterable<DataSnapshot> childrensnapshot = dataSnapshot.getChildren();
+                                    for (DataSnapshot dataSnapshoti : childrensnapshot) {
+
+                                        payment m = dataSnapshoti.getValue(payment.class);
+                                        String totm = m.getTotalmilk();
+
+                                        int totmi = Integer.parseInt(totm);
+
+                                        int totpa = Integer.parseInt(totalpaid);
+
+                                        int totreq = totmi * 35;
+
+                                        int payabl = totreq - totpa;
+
+
+                                        Amountpayable.setText(String.valueOf(payabl));
+
+
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
 
 
 //
