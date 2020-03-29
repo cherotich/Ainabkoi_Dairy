@@ -10,12 +10,17 @@
         android:title="@string/notification"
         app:showAsAction="never" />
     <item
+        android:id="@+id/idtext"
+
+        android:orderInCategory="200"
+        android:title="adminid"
+        app:showAsAction="ifRoom"></item>
+    <item
         android:id="@+id/action_notification"
         android:icon="@drawable/notification"
         android:orderInCategory="200"
         android:title="@string/notification"
-        app:showAsAction="ifRoom">
-    </item>
+        app:showAsAction="ifRoom"></item>
 
 
 </menu>

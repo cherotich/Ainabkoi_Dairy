@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -59,15 +60,22 @@ public class pay_farmer extends Fragment {
     private DatabaseReference idnolistref;
     String saveCurrentDate,saveCurrentTime,RandomKey;
     TextView datetxt,chosenmonthid,Amountpaid,milksupplied,Amountpayable,paymenthistorylink;
-    EditText currentyear,Amountpaidnow;
+    EditText currentyear, Amountpaidnow, daytxt;
     String selectedid;
     Spinner chosenmonth,timespanfilter;
     Button viewpossiblepay,submitpayment;
     String timespan,month;
-    double payabled;
+    String payabled;
+    String monthn, truncmonth;
+
 int total=0;
     int t;
+    String existingpay;
+//        int existingpayee = Integer.parseInt(existingpay);
 
+    String payable;
+    String supply;
+    //        int payablee =Integer.parseInt(payable);
     int paidalready=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,10 +98,15 @@ int total=0;
         Amountpaidnow = view.findViewById(R.id.Amount_paid_now);
         Amountpaid  = view.findViewById(R.id.Amount_paid);
         Amountpayable = view.findViewById(R.id.Amount_payable);
+        daytxt = view.findViewById(R.id.day);
 
         chosenmonthid.setVisibility(View.INVISIBLE);
         selectedid = paymilkIDNO.getText().toString();
         paymenthistorylink = view.findViewById(R.id.payment_history_link);
+
+        payable = Amountpayable.getText().toString();
+        existingpay = Amountpaid.getText().toString();
+        supply = milksupplied.getText().toString();
 
 
 
@@ -116,68 +129,104 @@ int total=0;
                 {
                     calendar = Calendar.getInstance();
                     month = (String) DateFormat.format("MMM", calendar.getTime());
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setText(month);
                     chosenmonthid.setVisibility(View.VISIBLE);
+
+                    //String inmonthno = (String) DateFormat.format("MM", calendar.set);
+                    monthn = String.valueOf(id);
+                    // monthn=(String) DateFormat.format("MM",calendar.getTime());
+                    // Toast.makeText(getContext(), "id"+Long.parseLong(month), Toast.LENGTH_SHORT).show();
+
                 }
                 if (id==1)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
+                    //Toast.makeText(getContext(), "trun"+truncmonth, Toast.LENGTH_SHORT).show();
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "01";
                 }
                 if (id==2)
                 {
                     month = parent.getItemAtPosition(position).toString();
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    truncmonth = month.substring(0, 3);
+                    //  Toast.makeText(getContext(), "trun"+truncmonth, Toast.LENGTH_SHORT).show();
+                    monthn = "02";
                 }
                 if (id==3)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "03";
                 }
                 if (id==4)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+
+
+                    //Toast.makeText(getContext(), "trun"+truncmonth, Toast.LENGTH_SHORT).show();
+                    monthn = "04";
                 }
                 if (id==5)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "05";
                 }
                 if (id==6)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "06";
                 }
                 if (id==7)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "07";
                 }
                 if (id==8)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "08";
                 }
                 if (id==9)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "09";
                 }
                 if (id==10)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "10";
                 }
                 if (id==11)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "11";
                 }
                 if (id==12)
                 {
                     month = parent.getItemAtPosition(position).toString();
+                    truncmonth = month.substring(0, 3);
                     chosenmonthid.setVisibility(View.INVISIBLE);
+                    monthn = "12";
                 }
 
             }
@@ -235,10 +284,8 @@ int total=0;
         currentyear.setText(String.valueOf(year));
 
 
-
-
-
-
+        String inday = (String) DateFormat.format("dd", calendar.getTime());
+        daytxt.setText(inday);
 
 
 
@@ -297,171 +344,247 @@ int total=0;
             @Override
             public void onClick(View v) {
 
+                if (TextUtils.isEmpty(supply)) {
 
-                holderdetailscard.setVisibility(View.VISIBLE);
-                final String cYear = currentyear.getText().toString();
-                final String cmonth = month;
-                String frquency = timespan;
 
-                selectedid = paymilkIDNO.getText().toString();
-                DatabaseReference  idnolistrefer= FirebaseDatabase.getInstance().getReference("milk");
-                ValueEventListener valueEventListener;
-                idnolistrefer.child(selectedid).child("timestamp").addValueEventListener(new ValueEventListener()
-                {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                    {
+                    holderdetailscard.setVisibility(View.VISIBLE);
+                    final String cYear = currentyear.getText().toString();
+                    final String cmonth = month;
+                    String frquency = timespan;
 
-                      Iterable<DataSnapshot> childrensnapshot = dataSnapshot.getChildren();
+                    selectedid = paymilkIDNO.getText().toString();
+                    DatabaseReference idnolistrefer = FirebaseDatabase.getInstance().getReference("milk");
+                    ValueEventListener valueEventListener;
+                    idnolistrefer.child(selectedid).child("timestamp").orderByChild(truncmonth).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            if (dataSnapshot.exists()) {
+                                int tot = 0;
+                                Iterable<DataSnapshot> childrensnapshot = dataSnapshot.getChildren();
 //                      ArrayList<milk> milks = new ArrayList<>();
-                      for (DataSnapshot dataSnapshoti:childrensnapshot)
+                                for (DataSnapshot dataSnapshoti : childrensnapshot) {
+                                    milk m = dataSnapshoti.getValue(milk.class);
 
-                      {
-                          milk  m = dataSnapshoti.getValue(milk.class);
-                          total=total+Integer.parseInt(m.getAmount());
-if ((cYear) .equals(m.getYear())&&cmonth.equalsIgnoreCase(m.getMonthstring()))
-{
+                                    if ((cYear).equals(m.getYear()) && truncmonth.equalsIgnoreCase(m.getMonthstring())) {
+                                        tot = tot + Integer.parseInt(m.getAmount());
 
 //     payabled = total*35;
 
-    //total=Integer.parseInt(m.getAmount());
-    milksupplied.setText(String.valueOf(total));
-}
+                                        //total=Integer.parseInt(m.getAmount());
+                                        milksupplied.setText(String.valueOf(tot));
 
-else
-{
-    milksupplied.setText("0");
-}
-//                          milks.add(m);
+                                        int payab = tot * 35;
+
+                                        payabled = String.valueOf(payab);
 
 
-                      }
-
-//
-//                        if (dataSnapshot.exists())
-//
-//                        {
-//                            farmers farmerssnapshot = dataSnapshot.getValue(farmers.class);
-//                            receivemilkname.setText(farmerssnapshot.getFarmername());
-//                            receivemilkphoneno.setText(farmerssnapshot.getFarmerphonenumber());
-//                            receivemilklocation.setText(farmerssnapshot.getLocation());
-//                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError)
-                    {
-
-                    }
-                });
-
-
-
-
-                final DatabaseReference  idnolistrefermilk= FirebaseDatabase.getInstance().getReference("payment");
-                idnolistrefermilk.child(selectedid).child("totalpaid").addValueEventListener(new ValueEventListener()
-                {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                    {
-                        if (dataSnapshot.exists())
-                        {
-
-                            final String totalpaid = dataSnapshot.getValue().toString();
-                            Amountpaid.setText(totalpaid);
-
-
-                            idnolistrefermilk.child(selectedid).child("timestamp").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                    Iterable<DataSnapshot> childrensnapshot = dataSnapshot.getChildren();
-                                    for (DataSnapshot dataSnapshoti : childrensnapshot) {
-
-                                        payment m = dataSnapshoti.getValue(payment.class);
-                                        String totm = m.getTotalmilk();
-
-                                        int totmi = Integer.parseInt(totm);
-
-                                        int totpa = Integer.parseInt(totalpaid);
-
-                                        int totreq = totmi * 35;
-
-                                        int payabl = totreq - totpa;
-
-
-                                        Amountpayable.setText(String.valueOf(payabl));
-
-
+                                    } else {
+                                        milksupplied.setText("0");
                                     }
 
 
                                 }
+                            } else
+{
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+    milksupplied.setText("0");
+}
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                    final DatabaseReference paylistrefermilk = FirebaseDatabase.getInstance().getReference("payment");
+                    paylistrefermilk.child(selectedid).child("timestamp").orderByChild(truncmonth).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                int totp = 0;
+                                Iterable<DataSnapshot> childrensnapshot = dataSnapshot.getChildren();
+                                for (DataSnapshot dataSnapshoti : childrensnapshot) {
+
+
+                                    payment payinstance = dataSnapshoti.getValue(payment.class);
+
+                                    if ((cYear).equals(payinstance.getForyear()) && truncmonth.equalsIgnoreCase(payinstance.getFormonth())) {
+                                        totp = totp + Integer.parseInt(payinstance.getPaidnow());
+                                        Amountpaid.setText(String.valueOf(totp));
+
+                                        DatabaseReference idnolistrefer = FirebaseDatabase.getInstance().getReference("milk");
+                                        ValueEventListener valueEventListener;
+                                        final int finalTotp = totp;
+                                        idnolistrefer.child(selectedid).child("timestamp").orderByChild(truncmonth).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                                if (dataSnapshot.exists()) {
+                                                    int tot = 0;
+                                                    Iterable<DataSnapshot> childrensnapshot = dataSnapshot.getChildren();
+                                                    for (DataSnapshot dataSnapshoti : childrensnapshot) {
+                                                        milk m = dataSnapshoti.getValue(milk.class);
+
+                                                        if ((cYear).equals(m.getYear()) && truncmonth.equalsIgnoreCase(m.getMonthstring())) {
+                                                            tot = tot + Integer.parseInt(m.getAmount());
+
+
+                                                            milksupplied.setText(String.valueOf(tot));
+
+                                                            int payab = tot * 35;
+
+                                                            int tobepaid = payab - finalTotp;
+
+                                                            payabled = String.valueOf(tobepaid);
+                                                            Amountpayable.setText(payabled);
+
+
+                                                        }
+
+
+                                                    }
+
+
+                                                }
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+                                    } else {
+                                        Amountpaid.setText("0");
+
+
+                                        DatabaseReference idnolistrefer = FirebaseDatabase.getInstance().getReference("milk");
+                                        ValueEventListener valueEventListener;
+                                        final int finalTotp = totp;
+                                        idnolistrefer.child(selectedid).child("timestamp").orderByChild(truncmonth).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                                if (dataSnapshot.exists()) {
+                                                    int tot = 0;
+                                                    Iterable<DataSnapshot> childrensnapshot = dataSnapshot.getChildren();
+//                      ArrayList<milk> milks = new ArrayList<>();
+                                                    for (DataSnapshot dataSnapshoti : childrensnapshot) {
+                                                        milk m = dataSnapshoti.getValue(milk.class);
+
+                                                        if ((cYear).equals(m.getYear()) && truncmonth.equalsIgnoreCase(m.getMonthstring())) {
+                                                            tot = tot + Integer.parseInt(m.getAmount());
+
+//     payabled = total*35;
+
+                                                            //total=Integer.parseInt(m.getAmount());
+                                                            milksupplied.setText(String.valueOf(tot));
+
+                                                            int payab = tot * 35;
+
+//                                                                            int tobepaid= payab- finalTotp;
+
+                                                            payabled = String.valueOf(payab);
+                                                            Amountpayable.setText(payabled);
+
+
+                                                        } else {
+                                                            Amountpayable.setText("0");
+                                                        }
+
+
+                                                    }
+
+
+                                                }
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+                                    }
 
                                 }
-                            });
 
 
+                            } else {
 
-//
-//                            Iterable<DataSnapshot> paymentnapshot = dataSnapshot.getChildren();
-////                      ArrayList<milk> milks = new ArrayList<>();
-//                            for (DataSnapshot psnapshot:paymentnapshot)
-//
-//                            {
-//
-//
-//                                payment  p = psnapshot.getValue(payment.class);
-//                                Amountpaid.setText(p.getTotalpaid());
-//
-////                                        String x= p.getTotalpaid();
-////
-//////                            paidalready= Integer.parseInt(x);
-////
-////
-////                                        //String w = p.getPaidalready();
-////
-////                                        int paidb = Integer.parseInt(x)/35;
-////                                        String q = p.getTotalmilk();
-////
-////                                        int tot = Integer.parseInt(q);
-////
-////                                        int sub = tot-paidb;
-////                                        int totalsub = sub*35;
-////
-////
-////                                        Amountpayable.setText(String.valueOf(totalsub));
-//
-//
-//
-//
-//
-//                            }
 
+                                DatabaseReference idnolistrefer = FirebaseDatabase.getInstance().getReference("milk");
+                                ValueEventListener valueEventListener;
+
+                                idnolistrefer.child(selectedid).child("timestamp").orderByChild(truncmonth).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                        if (dataSnapshot.exists()) {
+                                            int tot = 0;
+                                            Iterable<DataSnapshot> childrensnapshot = dataSnapshot.getChildren();
+                                            for (DataSnapshot dataSnapshoti : childrensnapshot) {
+                                                milk m = dataSnapshoti.getValue(milk.class);
+
+                                                if ((cYear).equals(m.getYear()) && truncmonth.equalsIgnoreCase(m.getMonthstring())) {
+                                                    tot = tot + Integer.parseInt(m.getAmount());
+
+                                                    int payab = tot * 35;
+
+                                                    int tobepaid = payab;
+
+                                                    payabled = String.valueOf(tobepaid);
+                                                    Amountpayable.setText(payabled);
+
+
+                                                }
+
+
+                                            }
+
+
+                                        }
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            }
 
 
                         }
-                        else
-                        {
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            Amountpaid.setText("0");
-
-                            Amountpayable.setText("0");
                         }
+                    });
 
 
-                    }
+                } else {
+                    Toast.makeText(getContext(), "already computed", Toast.LENGTH_SHORT).show();
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError)
-                    {
 
-                    }
-                });
+
+
+
 
 
             }
@@ -484,7 +607,14 @@ else
             public void onClick(View v) {
 
 
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                payment_history_per_farmer fraghistory = new payment_history_per_farmer();
+                Bundle bundle = new Bundle();
+                bundle.putString("fid", paymilkIDNO.getText().toString());
+                fraghistory.setArguments(bundle);
 
+                fr.replace(R.id.mainframe, fraghistory);
+                fr.commit();
             }
         });
 
@@ -505,27 +635,21 @@ else
         final String formonth = month;
 
         String inday = (String) DateFormat.format("dd",calendar.getTime());
-        String inmonthno = (String) DateFormat.format("MM",calendar.getTime());
-        String inmonthstring = (String) DateFormat.format("MMM", calendar.getTime());
+        final String inmonthno = (String) DateFormat.format("MM", calendar.getTime());
+        final String inmonthstring = (String) DateFormat.format("MMM", calendar.getTime());
         RandomKey=inday+inmonthno+inmonthstring+saveCurrentTime;
 
-
+        final String exactdate = daytxt.getText().toString();
         final String amountpaid=Amountpaidnow.getText().toString();
 
-//        final int amountpaide= Integer.parseInt(amountpaid);
-
-        String existingpay=Amountpaid.getText().toString();
-//        int existingpayee = Integer.parseInt(existingpay);
 
         String payable = Amountpayable.getText().toString();
-//        int payablee =Integer.parseInt(payable);
         selectedid = paymilkIDNO.getText().toString();
         if (TextUtils.isEmpty(amountpaid))
         {
             Amountpaidnow.requestFocus();
             Amountpaidnow.setError("Please enter the amount to be paid");
-        }
-        else if (Integer.parseInt(amountpaid)>Integer.parseInt(amountpaid))
+        } else if (Integer.parseInt(amountpaid) > Integer.parseInt(payable))
         {
 
 
@@ -539,7 +663,7 @@ else
         final DatabaseReference addnewpaymentref;
         addnewpaymentref = FirebaseDatabase.getInstance().getReference().child("payment");
         final HashMap<String, Object> paymentMap = new HashMap<>();
-               final int totalamount= Integer.parseInt(amountpaid) +Integer.parseInt(existingpay);
+                //final int totalamount= Integer.parseInt(amountpaid) +Integer.parseInt(existingpay);
 
         paymentMap.put("farmeridno",selectedid);
         paymentMap.put("time",saveCurrentTime);
@@ -549,14 +673,10 @@ else
         paymentMap.put("foryear",String.valueOf(cYear));
         paymentMap.put("formonth",formonth);
         paymentMap.put("paidnow",amountpaid);
-              //paymentMap.put("amountpayable",);
-//                paymentMap.put("paidalready",String.valueOf(totalamount));
+                paymentMap.put("forday", exactdate);
 
-//                int milkunpaid= totalamount- Integer.parseInt(milksupplied.getText().toString())*35;
-//                paymentMap.put("milkunpaid",String.valueOf(milkunpaid));
                 paymentMap.put("totalmilk",milksupplied.getText().toString());
-//                int paidmilk = Integer.parseInt(milksupplied.getText().toString())-totalamount/35;
-//                paymentMap.put("paidmilk",String.valueOf(paidmilk));
+
 
 
 
@@ -575,9 +695,10 @@ else
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                         {
+
+
                             if (dataSnapshot.exists())
                             {
-//                               payment  payments = dataSnapshot.getValue(payment.class);
 
                              int paid=  Integer.parseInt(dataSnapshot.getValue().toString()) + Integer.parseInt(amountpaid);
 
@@ -603,6 +724,34 @@ else
                                 Amountpaidnow.setText("");
                             }
 
+
+                            final DatabaseReference addnewpaymenthistoryref;
+                            addnewpaymenthistoryref = FirebaseDatabase.getInstance().getReference().child("history");
+                            final HashMap<String, Object> paymentMap = new HashMap<>();
+
+                            paymentMap.put("farmeridno", selectedid);
+                            paymentMap.put("time", saveCurrentTime);
+                            paymentMap.put("monthstring", inmonthstring);
+
+                            paymentMap.put("monthno", String.valueOf(inmonthno));
+                            paymentMap.put("foryear", String.valueOf(cYear));
+                            paymentMap.put("formonth", formonth);
+                            paymentMap.put("paidnow", amountpaid);
+                            paymentMap.put("forday", exactdate);
+
+
+                            addnewpaymenthistoryref.child(RandomKey).updateChildren(paymentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getContext(), "history updated", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getContext(), "history not updated", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
                         }
 
                         @Override
@@ -612,85 +761,6 @@ else
                         }
                     });
 
-//                    addnewpaymentref.child(selectedid).child("timestamp").child(RandomKey).child("amountpayable").addValueEventListener(new ValueEventListener()
-//                    {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-//                        {
-//                            if (dataSnapshot.exists())
-//                            {
-//                                DatabaseReference  idnolistrefermilk= FirebaseDatabase.getInstance().getReference("payment");
-//                                idnolistrefermilk.child(selectedid).child("timestamp").addValueEventListener(new ValueEventListener()
-//                                {
-//                                    @Override
-//                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-//                                    {
-//
-//                                        if (dataSnapshot.exists())
-//                                        {
-//
-//                                            Iterable<DataSnapshot> paymentnapshot = dataSnapshot.getChildren();
-//                                            for (DataSnapshot psnapshot:paymentnapshot)
-//
-//                                            {
-//
-//
-//                                                payment  p = psnapshot.getValue(payment.class);
-//                                              int payab= Integer.parseInt(p.getAmountpayable())-Integer.parseInt(amountpaid) ;
-//
-//                                                int paidmilk = Integer.parseInt(p.getMilkunpaid())*35;
-//
-//
-//
-//
-//                                                addnewpaymentref.child(selectedid).child("timestamp").child(RandomKey).child("amountpayable").setValue(String.valueOf(paidmilk)).addOnCompleteListener(new OnCompleteListener<Void>()
-//                                                {
-//                                                    @Override
-//                                                    public void onComplete(@NonNull Task<Void> task)
-//                                                    {
-//                                                        if (task.isSuccessful())
-//                                                        {
-//                                                            Toast.makeText(getContext(), "Wow it is a success", Toast.LENGTH_SHORT).show();
-//                                                        }
-//                                                        else {
-//                                                            Toast.makeText(getContext(), "oops fail", Toast.LENGTH_SHORT).show();
-//                                                        }
-//                                                    }
-//                                                });
-//
-//
-//
-//                                            }
-//                                        }
-//
-//
-//
-//
-//
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                    }
-//                                });
-//
-//
-//
-//                            }
-//                            else
-//                            {
-//                                addnewpaymentref.child(selectedid).child("timestamp").child(RandomKey).child("amountpayable").setValue(String.valueOf(t));
-//                            }
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                        }
-//                    });
                     Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
                     Amountpaidnow.setText("");
                 }

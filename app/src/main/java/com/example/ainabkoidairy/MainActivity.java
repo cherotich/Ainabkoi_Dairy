@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private FarmerFragment farmerFragment;
     private HomeFragment homeFragment;
     private StaffFragment staffFragment;
+    private notifications notifications;
+    public String admin = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         farmerFragment = new FarmerFragment();
         homeFragment = new HomeFragment();
         staffFragment = new StaffFragment();
+        notifications = new notifications();
         setFragment(homeFragment);
 
         mNaveView = (BottomNavigationView) findViewById(R.id.bottomnavmain);
@@ -38,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
         mNaveView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                admin = getIntent().getStringExtra("adminid");
+
+
                 switch (menuItem.getItemId()){
                     case R.id.home_icon:
 
@@ -81,13 +87,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+//
+        admin = getIntent().getStringExtra("adminid");
+        MenuItem admintxt = menu.findItem(R.id.idtext);
+        admintxt.setTitle(admin);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuItem = item.getItemId();
 
         switch(menuItem) {
             case R.id.action_notification:
+//
+                setFragment(notifications);
                 Toast.makeText(MainActivity.this, "Action Search", Toast.LENGTH_SHORT).show();
                 break;
+
 
 
         }

@@ -61,6 +61,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        farmerdatavisualization.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.mainframe, new graphical());
+                fr.commit();
+            }
+        });
 
         return view;
     }

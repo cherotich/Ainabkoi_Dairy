@@ -52,7 +52,7 @@ String saveCurrentDate,saveCurrentTime,RandomKey;
     ArrayList<String> idnoArrayListSearch;
     ArrayAdapter<String> adapter;
     ValueEventListener valueEventListener;
-    private DatabaseReference idnolistref;
+    private DatabaseReference idnolistref, milkperlocation;
     String selectedid,milkinlitres;
     TextView receivemilkname,receivemilkphoneno,receivemilklocation;
     ImageView receiveupdate;
@@ -84,6 +84,7 @@ String saveCurrentDate,saveCurrentTime,RandomKey;
 
 
         idnolistref= FirebaseDatabase.getInstance().getReference("Farmers");
+        milkperlocation = FirebaseDatabase.getInstance().getReference("Milk per location");
         idnoArrayListSearch = new ArrayList<>();
         receivemilkIDNO = view.findViewById(R.id.receive_milk_IDNO);
         adapter = new ArrayAdapter<String>(getContext(),
@@ -222,8 +223,7 @@ String saveCurrentDate,saveCurrentTime,RandomKey;
     }
 
 
-
-    private void AddMilk(final String selectedid, String saveCurrentDate, String saveCurrentTime, final String milkinlitres)
+    private void AddMilk(final String selectedid, final String saveCurrentDate, final String saveCurrentTime, final String milkinlitres)
 
     {
 
@@ -242,19 +242,72 @@ String saveCurrentDate,saveCurrentTime,RandomKey;
         milkMap.put("day",day);
 
 
-
-       addnewmilkref.child(selectedid).child("timestamp").child(RandomKey).updateChildren(milkMap).addOnCompleteListener(new OnCompleteListener<Void>()
+        addnewmilkref.child(selectedid).child("timestamp").child(RandomKey).updateChildren(milkMap).addOnCompleteListener(new OnCompleteListener<Void>()
        {
            @Override
            public void onComplete(@NonNull Task<Void> task) {
                if (task.isSuccessful())
                {
+
+
                    addnewmilkref.child(selectedid).addListenerForSingleValueEvent(new ValueEventListener() {
                        @Override
                        public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                        {
                            if (dataSnapshot.child("totalmilk").exists())
                            {
+
+
+                               String idno = receivemilkIDNO.getText().toString();
+
+                               final DatabaseReference idnolistreference;
+                               idnolistreference = FirebaseDatabase.getInstance().getReference().child("Farmers");
+
+                               idnolistreference.child(idno).addValueEventListener(new ValueEventListener() {
+                                   @Override
+                                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                       farmers farmerssnapshot = dataSnapshot.getValue(farmers.class);
+                                       final String farmerloc = farmerssnapshot.getLocation();
+
+                                       milkperlocation = FirebaseDatabase.getInstance().getReference("Milk per location");
+
+
+                                       HashMap<String, Object> milklocMap = new HashMap<>();
+
+                                       milklocMap.put("amount", milkinlitres);
+                                       milklocMap.put("date", saveCurrentDate);
+                                       milklocMap.put("time", saveCurrentTime);
+                                       milklocMap.put("milk_id", RandomKey);
+                                       milklocMap.put("year", year);
+                                       milklocMap.put("month", monthno);
+                                       milklocMap.put("monthstring", monthstring);
+                                       milklocMap.put("day", day);
+
+                                       milkperlocation.child(farmerloc).child(RandomKey).updateChildren(milklocMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                           @Override
+                                           public void onComplete(@NonNull Task<Void> task) {
+
+                                               if (task.isSuccessful()) {
+                                                   Toast.makeText(getContext(), "milk location updated", Toast.LENGTH_SHORT).show();
+                                               } else {
+                                                   Toast.makeText(getContext(), "milk location  unsuccessfully", Toast.LENGTH_SHORT).show();
+                                               }
+                                           }
+                                       });
+
+
+                                   }
+
+                                   @Override
+                                   public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                   }
+                               });
+
+
+
+
                                milk milkdata = dataSnapshot.getValue(milk.class);
                            //String milk =    milkdata.getTotalmilk().toString();
 
@@ -266,6 +319,8 @@ String saveCurrentDate,saveCurrentTime,RandomKey;
                                    public void onComplete(@NonNull Task<Void> task) {
                                        if (task.isSuccessful())
                                        {
+
+
                                            Toast.makeText(getContext(), "successfull", Toast.LENGTH_SHORT).show();
 
                                            receivemilkIDNO.setText("");
@@ -286,6 +341,61 @@ String saveCurrentDate,saveCurrentTime,RandomKey;
                            }
                            else
                            {
+//
+//                               String idno = receivemilkIDNO.getText().toString();
+//
+//                               idnolistref.child(idno).addValueEventListener(new ValueEventListener()
+//                               {
+//                                   @Override
+//                                   public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+//                                   {
+//
+//                                       farmers farmerssnapshot = dataSnapshot.getValue(farmers.class);
+//                                       String farmerloc = farmerssnapshot.getLocation();
+//                                       milkperlocation = FirebaseDatabase.getInstance().getReference("Milk per location");
+//
+//
+//
+//                                       final HashMap<String, Object> milkMap = new HashMap<>();
+//
+//                                       milkMap.put("amount",milkinlitres);
+//                                       milkMap.put("date",saveCurrentDate);
+//                                       milkMap.put("time",saveCurrentTime);
+//                                       milkMap.put("milk_id",RandomKey);
+//                                       milkMap.put("year",year);
+//                                       milkMap.put("month",monthno);
+//                                       milkMap.put("monthstring",monthstring);
+//                                       milkMap.put("day",day);
+//
+//                                       milkperlocation.child(farmerloc).child(RandomKey).updateChildren(milkMap).addOnCompleteListener(new OnCompleteListener<Void>()
+//                                       {
+//                                           @Override
+//                                           public void onComplete(@NonNull Task<Void> task)
+//                                           {
+//
+//                                               if (task.isSuccessful())
+//
+//                                               {
+//                                                   Toast.makeText(getContext(), "milk location updated", Toast.LENGTH_SHORT).show();
+//                                               }
+//                                               else
+//                                               {
+//                                                   Toast.makeText(getContext(), "milk location  unsuccessfully", Toast.LENGTH_SHORT).show();
+//                                               }
+//                                           }
+//                                       });
+//
+//                                   }
+//
+//                                   @Override
+//                                   public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                   }
+//                               });
+//
+
+
+
                                addnewmilkref.child(selectedid).child("totalmilk").setValue(milkinlitres);
                                receivemilkIDNO.setText("");
                                amountofmilk.setText("");
@@ -293,7 +403,10 @@ String saveCurrentDate,saveCurrentTime,RandomKey;
                                holdercard.setVisibility(View.INVISIBLE);
                                submitmilk.setVisibility(View.INVISIBLE);
                                //Toast.makeText(getContext(), "please ensure that you have entered the correct ID NO", Toast.LENGTH_SHORT).show();
+
+
                            }
+
 
                        }
 
