@@ -121,6 +121,8 @@
     <string name="back">BACK</string>
     <string name="customized_notifications"><u>Customized notifications</u></string>
     <string name="view_notifications"><u>View notifications</u></string>
+    <string name="sent_notifications"><u>Sent notifications</u></string>
+    <string name="back_to_notifications_homepage">Back to notifications homepage</string>
     <string-array name="roleslogin">
 
         <item>Farmer</item>
